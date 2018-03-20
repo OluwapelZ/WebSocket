@@ -94,7 +94,9 @@ public class Socket extends Emitter {
 
                 counter.set(1);
                 if (strategy!=null)
-                strategy.setAttmptsMade(0);
+                strategy.setAttemptsMade(0);
+
+
 
                 JSONObject handshakeObject=new JSONObject();
                 handshakeObject.put("event","#handshake");
@@ -104,6 +106,7 @@ public class Socket extends Emitter {
                 handshakeObject.put("cid",counter.getAndIncrement());
                 websocket.sendText(handshakeObject.toString());
 
+                //Previous implementation of sending websocket data params
 //                websocket.sendText("{\"event\": \"#handshake\",\"data\": {\"authToken\":\""+AuthToken+"\"},\"cid\": "+ cid++ +"}");
 
                 listener.onConnected(Socket.this,headers);
@@ -435,6 +438,7 @@ public class Socket extends Emitter {
         }catch (IOException e){
             e.printStackTrace();
         }
+        //Check and add token to header.
         ws.addExtension("permessage-deflate; client_max_window_bits");
         ws.addHeader("Accept-Encoding","gzip, deflate, sdch");
         ws.addHeader("Accept-Language","en-US,en;q=0.8");
@@ -516,7 +520,7 @@ public class Socket extends Emitter {
             },strategy.getReconnectInterval());
 
         }else{
-            strategy.setAttmptsMade(0);
+            strategy.setAttemptsMade(0);
         }
 
     }

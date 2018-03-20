@@ -61,7 +61,7 @@ public class ReconnectStrategy {
         return this;
     }
 
-    public void setAttmptsMade(Integer attmptsMade) {
+    public void setAttemptsMade(Integer attmptsMade) {
         this.attmptsMade = attmptsMade;
     }
 
