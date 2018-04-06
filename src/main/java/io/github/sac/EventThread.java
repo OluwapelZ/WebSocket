@@ -14,6 +14,12 @@ import java.util.concurrent.ThreadFactory;
 
 public class EventThread extends Thread {
 
+    private static EventThread thread;
+
+    private static ExecutorService service;
+
+    private static int counter = 0;
+    
     private static final ThreadFactory THREAD_FACTORY = new ThreadFactory() {
         public Thread newThread(Runnable runnable) {
             thread = new EventThread(runnable);
@@ -21,13 +27,6 @@ public class EventThread extends Thread {
             return thread;
         }
     };
-
-    private static EventThread thread;
-
-    private static ExecutorService service;
-
-    private static int counter = 0;
-
 
     private EventThread(Runnable runnable) {
         super(runnable);
@@ -45,9 +44,10 @@ public class EventThread extends Thread {
     /**
      * Executes a task in io.github.sac.EventThread.
      *
-     * @param task
+     * @param task - Current Runnable task to be executed.
      */
     public static void exec(Runnable task) {
+        //Check if the thread to be executed is the current thread.
         if (isCurrent()) {
             task.run();
         } else {

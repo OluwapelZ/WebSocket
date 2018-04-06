@@ -61,6 +61,10 @@ public class Socket extends Emitter {
         this.URL=url;
     }
 
+    public String getUrl() {
+        return this.URL;
+    }
+
     public void setReconnection(ReconnectStrategy strategy) {
         this.strategy = strategy;
     }
@@ -96,13 +100,13 @@ public class Socket extends Emitter {
                 if (strategy!=null)
                 strategy.setAttemptsMade(0);
 
-
-
+                //Bundle data object and event object in JSON Object
                 JSONObject handshakeObject=new JSONObject();
                 handshakeObject.put("event","#handshake");
                 JSONObject object=new JSONObject();
                 object.put("authToken",AuthToken);
                 handshakeObject.put("data",object);
+                //Note counter is of DataType AtomicInteger.
                 handshakeObject.put("cid",counter.getAndIncrement());
                 websocket.sendText(handshakeObject.toString());
 
@@ -261,7 +265,7 @@ public class Socket extends Emitter {
 
         EventThread.exec(new Runnable() {
             public void run() {
-                JSONObject eventObject=new JSONObject();
+                JSONObject eventObject = new JSONObject();
                 acks.put(counter.longValue(),getAckObject(event,ack));
                 try {
                     eventObject.put("event",event);

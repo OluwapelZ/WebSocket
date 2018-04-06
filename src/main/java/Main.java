@@ -26,12 +26,14 @@ public class Main {
                 System.out.println("Connected to endpoint");
             }
 
+            @Override
             public void onDisconnected(Socket socket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer) {
-                System.out.println("Disconnected from end-point");
+
             }
 
+            @Override
             public void onConnectError(Socket socket, WebSocketException exception) {
-                System.out.println("Got connect error " + exception);
+
             }
 
             public void onSetAuthToken(String token, Socket socket) {
